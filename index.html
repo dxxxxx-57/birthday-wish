@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杨子依生日祝福</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background: #0a0a2a;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+
+        /* 粒子背景 */
+        #particle-canvas {
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* 开场动画部分 */
+        #intro-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            background: radial-gradient(circle at center, rgba(26, 26, 74, 0.8) 0%, rgba(10, 10, 42, 0.9) 70%);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+
+        .cake-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin-bottom: 50px;
+            transform: scale(0.8);
+            animation: cakeAppear 2s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes cakeAppear {
+            0% { transform: scale(0.8); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .cake-layer {
+            position: absolute;
+            border-radius: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .layer-1 {
+            width: 200px;
+            height: 60px;
+            background: linear-gradient(to bottom, #ffdae9, #ff9ec5);
+            bottom: 40px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .layer-2 {
+            width: 170px;
+            height: 50px;
+            background: linear-gradient(to bottom, #ffc2db, #ff7bac);
+            bottom: 100px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            animation: float 3s ease-in-out infinite 0.2s;
+        }
+
+        .layer-3 {
+            width: 140px;
+            height: 40px;
+            background: linear-gradient(to bottom, #ffa5c8, #ff5f9e);
+            bottom: 150px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            animation: float 3s ease-in-out infinite 0.4s;
+        }
+
+        .candle {
+            position: absolute;
+            width: 8px;
+            height: 70px;
+            background: white;
+            border-radius: 4px;
+            bottom: 210px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: float 3s ease-in-out infinite 0.6s;
+        }
+
+        .flame {
+            position: absolute;
+            width: 20px;
+            height: 40px;
+            background: #ffd700;
+            border-radius: 50% 50% 20% 20%;
+            bottom: 250px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px #ff9900, 0 0 40px #ff5500;
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        .intro-title {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #ffd6ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleGlow 3s infinite alternate, pulse 2s infinite;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 10px rgba(255, 105, 180, 0.6); }
+            100% { text-shadow: 0 0 25px rgba(255, 105, 180, 1), 0 0 40px rgba(255, 20, 147, 0.8); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+            50% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+            100% { transform: translateX(-50%) scale(0.95); opacity: 0.8; }
+        }
+
+        .input-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideUp 1s forwards;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #ffd6ff;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #ff7bac;
+            background: rgba(10, 10, 30, 0.7);
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #ff2e93;
+            box-shadow: 0 0 15px rgba(255, 46, 147, 0.5);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .enter-btn {
+            background: linear-gradient(45deg, #ff2e93, #ff7bac);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(255, 46, 147, 0.4);
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 46, 147, 0.6);
+        }
+
+        .enter-btn:active {
+            transform: translateY(0);
+        }
+
+        .enter-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(25deg);
+            transition: all 0.6s;
+        }
+
+        .enter-btn:hover::after {
+            left: 120%;
+        }
+
+        /* 主内容部分 */
+        #main-content {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: auto;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 30px 20px;
+            max-width: 900px;
+            width: 95%;
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 5rem;
+            color: #ffd6ff;
+            margin: 30px 0 20px;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+            animation: pulse 2s infinite;
+            font-weight: 800;
+            position: relative;
+        }
+
+        .name {
+            font-size: 4.5rem;
+            color: #ff7bac;
+            margin: 20px 0 40px;
+            text-shadow: 0 0 15px rgba(255, 20, 147, 0.7);
+            animation: bounce 1.5s ease infinite;
+            display: inline-block;
+        }
+
+        .message {
+            font-size: 1.8rem;
+            line-height: 1.7;
+            color: #e6e6ff;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            max-width: 800px;
+            min-height: 220px;
+            text-align: center;
+            border-left: 3px solid #ff2e93;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .message::after {
+            content: "|";
+            animation: blink 1s infinite;
+        }
+
+        .btn-container {
+            margin: 30px 0;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff2e93, #ff7bac);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(255, 46, 147, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 46, 147, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .wheel-container {
+            display: none;
+            margin: 30px auto;
+            max-width: 600px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .wheel {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto 30px;
+        }
+
+        .wheel-item {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: bottom right;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            z-index: 10;
+            border: 5px solid #ff2e93;
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            z-index: 20;
+            color: #ff2e93;
+            font-size: 40px;
+            text-shadow: 0 0 10px rgba(255, 46, 147, 0.8);
+        }
+
+        .prize-display {
+            display: none;
+            margin: 30px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            max-width: 500px;
+            animation: fadeIn 1s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .prize-title {
+            font-size: 2.5rem;
+            color: #ff7bac;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
+        }
+
+        .mic-icon {
+            font-size: 10rem;
+            color: #ff2e93;
+            margin: 20px 0;
+            animation: bounce 1s infinite;
+            text-shadow: 0 0 20px rgba(255, 46, 147, 0.8);
+        }
+
+        .prize-text {
+            font-size: 2rem;
+            margin: 20px 0;
+            color: #e6e6ff;
+        }
+
+        .signature {
+            font-size: 2rem;
+            color: #ff7bac;
+            margin-top: 30px;
+            font-style: italic;
+            text-align: right;
+            padding-right: 40px;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 12px 15px;
+            border-radius: 50px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .music-btn {
+            background: #ff2e93;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: #ff0a80;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); text-shadow: 0 0 10px rgba(255, 105, 180, 0.6); }
+            50% { transform: scale(1.05); text-shadow: 0 0 25px rgba(255, 105, 180, 1), 0 0 40px rgba(255, 20, 147, 0.8); }
+            100% { transform: scale(1); text-shadow: 0 0 10px rgba(255, 105, 180, 0.6); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* 烟花效果 */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        /* 飘落效果 */
+        .falling-element {
+            position: absolute;
+            top: -50px;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .intro-title { font-size: 3rem; }
+            .title { font-size: 3.5rem; }
+            .name { font-size: 3.2rem; }
+            .message { font-size: 1.5rem; }
+            .wheel { width: 300px; height: 300px; }
+            .btn { font-size: 1.5rem; padding: 12px 30px; }
+        }
+
+        @media (max-width: 480px) {
+            .intro-title { font-size: 2.5rem; }
+            .title { font-size: 2.8rem; }
+            .name { font-size: 2.5rem; }
+            .message { font-size: 1.3rem; }
+            .wheel { width: 250px; height: 250px; }
+            .cake-container { transform: scale(0.7); }
+        }
+    </style>
+</head>
+<body>
+<canvas id="particle-canvas"></canvas>
+
+<!-- 开场页面 -->
+<div id="intro-screen">
+    <div class="cake-container">
+        <div class="cake-layer layer-1"></div>
+        <div class="cake-layer layer-2"></div>
+        <div class="cake-layer layer-3"></div>
+        <div class="candle"></div>
+        <div class="flame"></div>
+    </div>
+    <div class="controls">
+        <button class="music-btn" id="musicBtn">
+            <i class="fas fa-music"></i>
+        </button>
+    </div>
+
+    <h1 class="intro-title">生日快乐</h1>
+
+    <div class="input-container">
+        <div class="input-group">
+            <label for="birthday-code"><i class="fas fa-lock"></i> 生日密码</label>
+            <input type="text" id="birthday-code" placeholder="输入生日密码 (如: 0721)">
+        </div>
+
+        <div class="input-group">
+            <label for="birthday-person"><i class="fas fa-birthday-cake"></i> 寿星名字</label>
+            <input type="text" id="birthday-person" placeholder="输入寿星名字" value="子依">
+        </div>
+
+        <button class="enter-btn" id="enter-btn">
+            进入祝福 <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+</div>
+
+<!-- 主内容页面 -->
+<div id="main-content">
+    <!--    <div class="controls">-->
+    <!--        <button class="music-btn" id="musicBtn">-->
+    <!--            <i class="fas fa-music"></i>-->
+    <!--        </button>-->
+    <!--    </div>-->
+
+    <div class="container">
+        <h1 class="title">生日快乐</h1>
+        <div class="name" id="birthday-name">杨子依</div>
+
+        <div class="message" id="typingMessage"></div>
+
+        <div class="btn-container">
+            <button class="btn" id="lotteryBtn">开启幸运抽奖</button>
+        </div>
+
+        <div class="wheel-container" id="wheelContainer">
+            <div class="wheel">
+                <div class="wheel-pointer">
+                    <i class="fas fa-caret-down"></i>
+                </div>
+                <div class="wheel-center"></div>
+                <!-- 转盘项由JS生成 -->
+            </div>
+            <button class="btn" id="spinBtn">开始抽奖</button>
+        </div>
+
+        <div class="prize-display" id="prizeDisplay">
+            <div class="prize-title">恭喜中奖！</div>
+            <div class="mic-icon">
+                <i class="fas fa-microphone-alt"></i>
+            </div>
+            <div class="prize-text">麦克风一支</div>
+            <p>愿这麦克风伴随你的美妙歌声，唱响人生的每一个精彩瞬间！</p>
+        </div>
+
+        <div class="signature" id="signature">—— 你的朋友</div>
+    </div>
+</div>
+
+<audio id="birthdayMusic" loop>
+    <!--     实际使用时请替换为刘思鉴《天使》的有效MP3链接 -->
+    <source src="song.mp3" type="audio/mpeg">
+    <!--    <embed src="http://music.163.com/#/song?id=2085441506.mp3"-->
+</audio>
+<!--<audio autoplay="autoplay" controls="controls" loop="loop" preload="auto" src="song.mp3"></audio>-->
+<script>
+    // 粒子背景
+    function initParticleBackground() {
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 150;
+
+        // 粒子类
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // 创建粒子
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        // 连接粒子
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(173, 216, 230, ${1 - distance/100})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // 动画循环
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // 窗口大小调整
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    }
+
+    // 祝福语
+    const message = "之前说偶然相聚，最是人间堪乐处。现在看来所有的遇见都是注定的缘分。希望新的一岁你可以继续快乐的唱歌，散发自己的魅力。你我之间，无需多言。生日快乐，子依。";
+
+    // 创建飘落元素（气球、爱心、星星）
+    function createFallingElements() {
+        const types = ['❀', '❁', '✦', '✧', '✬', '✭', '❤', '★', '☆', '✿'];
+        const colors = ['#ff9a9e', '#fad0c4', '#ffd6ff', '#a7d2ff', '#c2f0ff', '#ffd700'];
+
+        for (let i = 0; i < 50; i++) {
+            const element = document.createElement('div');
+            element.classList.add('falling-element');
+            element.innerHTML = types[Math.floor(Math.random() * types.length)];
+            element.style.left = Math.random() * 100 + 'vw';
+            element.style.fontSize = (20 + Math.random() * 30) + 'px';
+            element.style.color = colors[Math.floor(Math.random() * colors.length)];
+            element.style.opacity = 0.3 + Math.random() * 0.7;
+            element.style.animationDuration = (10 + Math.random() * 20) + 's';
+            element.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(element);
+        }
+    }
+
+    // 创建烟花效果
+    function createFireworks() {
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                firework.style.left = Math.random() * 100 + 'vw';
+                firework.style.top = Math.random() * 100 + 'vh';
+                firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 60%)`;
+                document.body.appendChild(firework);
+
+                // 烟花爆炸效果
+                setTimeout(() => {
+                    firework.style.width = '1px';
+                    firework.style.height = '1px';
+                    firework.style.boxShadow = `
+                            0 0 5px 2px ${firework.style.backgroundColor},
+                            0 0 10px 5px white,
+                            0 0 15px 10px ${firework.style.backgroundColor}
+                        `;
+                    firework.style.opacity = '1';
+
+                    // 消失
+                    setTimeout(() => {
+                        firework.style.opacity = '0';
+                        firework.style.transition = 'opacity 1s ease';
+
+                        // 移除元素
+                        setTimeout(() => {
+                            if (firework.parentNode) {
+                                firework.parentNode.removeChild(firework);
+                            }
+                        }, 1000);
+                    }, 500);
+                }, 100);
+            }, i * 500);
+        }
+    }
+
+    // 打字机效果
+    function typeWriter() {
+        const messageElement = document.getElementById('typingMessage');
+        let charIndex = 0;
+        let content = '';
+
+        function type() {
+            if (charIndex < message.length) {
+                content += message.charAt(charIndex);
+                messageElement.innerHTML = content;
+                charIndex++;
+                setTimeout(type, 100);
+            } else {
+                // 打字完成后添加闪烁的光标
+                messageElement.style.position = 'relative';
+                messageElement.innerHTML = content;
+            }
+        }
+
+        type();
+    }
+
+    // 创建转盘
+    function createWheel() {
+        const wheel = document.querySelector('.wheel');
+        const items = [
+            {text: "麦克风", color: "#ff2e93", icon: "fas fa-microphone-alt"},
+            {text: "蛋糕", color: "#ff9800", icon: "fas fa-birthday-cake"},
+            {text: "鲜花", color: "#4caf50", icon: "fas fa-spa"},
+            {text: "礼物", color: "#9c27b0", icon: "fas fa-gift"},
+            {text: "音乐", color: "#2196f3", icon: "fas fa-music"},
+            {text: "星星", color: "#ffeb3b", icon: "fas fa-star"},
+            {text: "祝福", color: "#00bcd4", icon: "fas fa-heart"},
+            {text: "快乐", color: "#ff5722", icon: "fas fa-laugh-beam"}
+        ];
+
+        // 计算每个扇形的角度
+        const anglePerItem = 360 / items.length;
+
+        items.forEach((item, index) => {
+            const itemElement = document.createElement('div');
+            itemElement.classList.add('wheel-item');
+            itemElement.innerHTML = `<i class="${item.icon}"></i> ${item.text}`;
+            itemElement.style.backgroundColor = item.color;
+            itemElement.style.transform = `rotate(${index * anglePerItem}deg)`;
+            wheel.appendChild(itemElement);
+        });
+    }
+
+    // 转盘旋转
+    function spinWheel() {
+        const wheel = document.querySelector('.wheel');
+        const spinBtn = document.getElementById('spinBtn');
+        const wheelContainer = document.getElementById('wheelContainer');
+        const prizeDisplay = document.getElementById('prizeDisplay');
+
+        spinBtn.disabled = true;
+        spinBtn.textContent = "抽奖中...";
+
+        // 旋转转盘 (麦克风在索引0位置)
+        const targetRotation = 360 * 5 + 0;
+
+        wheel.style.transition = 'transform 4s cubic-bezier(0.2, 0.8, 0.3, 1)';
+        wheel.style.transform = `rotate(${targetRotation}deg)`;
+
+        // 显示奖品
+        setTimeout(() => {
+            wheelContainer.style.display = 'none';
+            prizeDisplay.style.display = 'block';
+
+            // 添加庆祝烟花
+            createFireworks();
+        }, 4500);
+    }
+
+    // 音乐控制
+    const musicBtn = document.getElementById('musicBtn');
+    const birthdayMusic = document.getElementById('birthdayMusic');
+
+    musicBtn.addEventListener('click', () => {
+        if (birthdayMusic.paused) {
+            birthdayMusic.play().catch(e => console.log("音乐播放失败:", e));
+            musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        } else {
+            birthdayMusic.pause();
+            musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+        }
+    });
+
+    // 初始化
+    window.onload = function() {
+        initParticleBackground();
+        createFallingElements();
+        createFireworks();
+
+        // 进入按钮事件
+        document.getElementById('enter-btn').addEventListener('click', function() {
+            const birthdayCode = document.getElementById('birthday-code').value.trim();
+            const birthdayPerson = document.getElementById('birthday-person').value.trim();
+
+            if (!birthdayCode || !birthdayPerson) {
+                alert('请填写生日密码和寿星名字');
+                return;
+            }
+
+            // 验证生日密码（这里只是示例，实际使用中可以更复杂）
+            if (!/^\d{4}$/.test(birthdayCode)) {
+                alert('生日密码应为4位数字');
+                return;
+            }
+
+            // 更新祝福页面的名字
+            document.getElementById('birthday-name').textContent = birthdayPerson;
+            document.getElementById('signature').textContent = `—— 神秘朋友 (密码: ${birthdayCode})`;
+
+            // 动画切换
+            const introScreen = document.getElementById('intro-screen');
+            introScreen.style.opacity = '0';
+            introScreen.style.transform = 'scale(1.2)';
+
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+
+                // 启动打字机效果
+                typeWriter();
+
+                // 创建转盘
+                createWheel();
+
+                // 添加烟花庆祝
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(createFireworks, i * 300);
+                }
+            }, 1500);
+        });
+
+        // 绑定抽奖按钮事件
+        document.getElementById('lotteryBtn').addEventListener('click', function() {
+            document.getElementById('wheelContainer').style.display = 'block';
+            this.style.display = 'none';
+        });
+
+        document.getElementById('spinBtn').addEventListener('click', spinWheel);
+
+        // 烟花循环
+        setInterval(createFireworks, 5000);
+    };
+</script>
+</body>
+</html>
